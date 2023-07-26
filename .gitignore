@@ -1,5 +1,6 @@
 secret.json
 .ipynb_checkpoints/
 dataset/movies.csv
-"imdb all movies dataset.zip"
+dataset/movies_cleaned.csv
+imdb\ all\ movies\ dataset.zip
 __pycache__
