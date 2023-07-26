@@ -17,8 +17,9 @@ class Movie:
     photo_width: Optional[int] = None
     photo_height: Optional[int] = None
 
+
 # Function to create movie instances from the provided JSON data
-def create_movie_instances(data:List) -> List:
+def create_movie_instances(data: List) -> List:
     # sourcery skip: inline-immediately-returned-variable, list-comprehension
     movie_instances = [
         Movie(
@@ -40,12 +41,13 @@ def create_movie_instances(data:List) -> List:
 
 
 # Function to store movie data in the SQLite database using concurrent.futures
-def store_movies(movie_instances:list, database_name:str):
+def store_movies(movie_instances: list, database_name: str):
     conn = sqlite3.connect(database_name)
     c = conn.cursor()
 
-    # Create the table if it does not exist 
-    c.execute('''CREATE TABLE IF NOT EXISTS movies (
+    # Create the table if it does not exist
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS movies (
                 title TEXT,
                 year INTEGER,
                 imdb_id TEXT UNIQUE,
@@ -57,15 +59,27 @@ def store_movies(movie_instances:list, database_name:str):
                 img_poster TEXT,
                 photo_width INTEGER,
                 photo_height INTEGER
-                )''')
+                )"""
+    )
 
     # Insert movie data into the table
     for movie in movie_instances:
-        c.execute('INSERT INTO movies VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (
-            movie.title, movie.year, movie.imdb_id, movie.rank,
-            movie.actors, movie.aka, movie.imdb_url, movie.imdb_iv,
-            movie.img_poster, movie.photo_width, movie.photo_height
-        ))
+        c.execute(
+            "INSERT INTO movies VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                movie.title,
+                movie.year,
+                movie.imdb_id,
+                movie.rank,
+                movie.actors,
+                movie.aka,
+                movie.imdb_url,
+                movie.imdb_iv,
+                movie.img_poster,
+                movie.photo_width,
+                movie.photo_height,
+            ),
+        )
 
     # Commit changes and close the connection
     conn.commit()
@@ -77,11 +91,10 @@ def query_movie_by_title(title, database_name):
     conn = sqlite3.connect(database_name)
     c = conn.cursor()
 
-    c.execute('SELECT * FROM movies WHERE title LIKE ?', (f'%{title}%', ))
+    c.execute("SELECT * FROM movies WHERE title LIKE ?", (f"%{title}%",))
     result = c.fetchone()
 
     # Close the connection
     conn.close()
-    
 
     return Movie(*result) if result else None

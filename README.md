@@ -46,8 +46,12 @@ streamlit run app.py
 * Enter a movie preferences in white box.(Enter keywords that movie contains)
 * Select from DropDown.
 * Click on the "Search" button, and the system will provide a list of movie suggestions that match your preferences.
-
+* **Checkout the App** [click here](https://huggingface.co/spaces/tikendraw/movie-recommender)
 ![Image](demo.png)
+* Or Scan the code.
+
+    <img src="qrcode.png" alt="Image" width="200" height="200">
+
 ## How it Works
 
 The Content-Based Movie Recommender System utilizes machine learning algorithms to identify the similarities between movies. 
